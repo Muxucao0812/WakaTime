@@ -1,6 +1,9 @@
 name: GitHub个人资料统计生成
 
 on:
+  push:
+    branches:
+      - main
   schedule:
     # 设置为每天中午12点(UTC)运行，即北京时间晚上8点
     - cron: "0 12 * * *"
@@ -29,8 +32,6 @@ jobs:
           config_display: large  # 改为large而不是columns以获得更大的宽度
           config_order: base.header, isocalendar, languages, habits, wakatime
           config_padding: 5%     # 减少内边距以利用更多空间
-          config_width: 1000     # 明确设置宽度
-          config_height: 1000    # 明确设置高度
           
           # 编程语言统计（增强显示百分比）
           plugin_languages: yes
