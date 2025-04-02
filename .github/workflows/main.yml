@@ -30,7 +30,7 @@ jobs:
           # 美化配置 - 调整为大尺寸
           template: classic
           config_display: large  # 改为large而不是columns以获得更大的宽度
-          config_order: base.header, isocalendar, languages, habits, wakatime
+          config_order: base.header, isocalendar, languages, notable, habits, wakatime, lines, activity
           config_padding: 5%     # 减少内边距以利用更多空间
           
           # 编程语言统计（增强显示百分比）
@@ -55,10 +55,30 @@ jobs:
           plugin_wakatime: yes
           plugin_wakatime_token: ${{ secrets.WAKATIME_API_KEY }}
           plugin_wakatime_days: 7
-          plugin_wakatime_sections: time, languages, editors, os
-          plugin_wakatime_limit: 5
+          plugin_wakatime_sections: time, languages, editors, os, projects
+          plugin_wakatime_limit: 8
           plugin_wakatime_url: https://wakatime.com
+          plugin_wakatime_repositories: yes
           
+          # 代码行统计（显示添加和删除了多少行代码）
+          plugin_lines: yes
+          plugin_lines_sections: repositories, history
+          plugin_lines_repositories_limit: 5
+          plugin_lines_history_limit: 5
+          
+          # 活动时间线（显示最近的贡献时间和内容）
+          plugin_activity: yes
+          plugin_activity_limit: 5
+          plugin_activity_days: 14
+          plugin_activity_filter: all
+          plugin_activity_visibility: public
+          plugin_activity_timestamps: yes
+          
+          # 显示值得注意的贡献
+          plugin_notable: yes
+          plugin_notable_from: organization
+          plugin_notable_types: commit
+          plugin_notable_repositories: yes
           
           # 输出文件设置
           output_action: commit
