@@ -24,19 +24,37 @@ jobs:
           # 基础模块
           base: header, activity, community, repositories, metadata
           
-          # 编程语言统计
+          # 美化配置
+          template: classic
+          config_display: columns
+          config_order: base.header, isocalendar, languages, habits, wakatime
+          config_padding: 10%
+          
+          # 编程语言统计（增强显示百分比）
           plugin_languages: yes
+          plugin_languages_details: percentage
+          plugin_languages_colors: github
+          plugin_languages_threshold: 0%
+          plugin_languages_limit: 10
           
           # 贡献日历
           plugin_isocalendar: yes
+          plugin_isocalendar_duration: full-year
           
-          # 编码习惯
+          # 编码习惯（显示每天编码时间分布）
           plugin_habits: yes
           plugin_habits_charts: yes
+          plugin_habits_facts: yes
+          plugin_habits_from: 200
+          plugin_habits_days: 14
           
-          # WakaTime统计
+          # WakaTime统计（增强显示操作系统和时间分布）
           plugin_wakatime: yes
           plugin_wakatime_token: ${{ secrets.WAKATIME_API_KEY }}
+          plugin_wakatime_days: 7
+          plugin_wakatime_sections: time, languages, editors, os
+          plugin_wakatime_limit: 5
+          plugin_wakatime_url: https://wakatime.com
           
           # 输出文件设置
           output_action: commit
