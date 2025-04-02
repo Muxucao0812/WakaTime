@@ -2,7 +2,7 @@ name: main
 
 on:
   schedule:
-    - cron: "0 0 * * *" # 每小时更新一次
+    - cron: "0 12 * * *" # 每小时更新一次
   workflow_dispatch:
 
 jobs:
@@ -13,6 +13,7 @@ jobs:
         uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GH_TOKEN }}
+          committer_token: ${{ secrets.GH_TOKEN }}
           user: Muxucao0812
           config_timezone: Asia/Shanghai
           base: header, activity, community, repositories, metadata
