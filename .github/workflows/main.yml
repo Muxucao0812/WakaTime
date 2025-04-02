@@ -1,25 +1,44 @@
-name: main
+name: GitHub个人资料统计生成
 
 on:
   schedule:
-    - cron: "0 12 * * *" # 每小时更新一次
+    # 设置为每天中午12点(UTC)运行，即北京时间晚上8点
+    - cron: "0 12 * * *"
+  # 允许手动触发工作流
   workflow_dispatch:
 
 jobs:
   github-metrics:
+    name: 生成GitHub统计数据
     runs-on: ubuntu-latest
     steps:
-      - name: Generate GitHub Metrics
+      - name: 生成GitHub个人资料统计信息
         uses: lowlighter/metrics@latest
         with:
+          # 认证与设置
           token: ${{ secrets.GH_TOKEN }}
           committer_token: ${{ secrets.GH_TOKEN }}
           user: Muxucao0812
           config_timezone: Asia/Shanghai
+          
+          # 基础模块
           base: header, activity, community, repositories, metadata
+          
+          # 编程语言统计
           plugin_languages: yes
+          
+          # 贡献日历
           plugin_isocalendar: yes
+          
+          # 编码习惯
           plugin_habits: yes
           plugin_habits_charts: yes
+          
+          # WakaTime统计
           plugin_wakatime: yes
           plugin_wakatime_token: ${{ secrets.WAKATIME_API_KEY }}
+          
+          # 输出文件设置
+          output_action: commit
+          committer_branch: main
+          committer_message: "📊 更新个人GitHub统计信息"
