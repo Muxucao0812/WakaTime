@@ -1,3 +1,3 @@
 ## 📊 My Dev Metrics
 
-![Metrics](https://metrics.lecoq.io/Muxucao0812?template=classic&isocalendar=1&languages=1&habits=1&wakatime=1)
+![Metrics](https://github.com/Muxucao0812/Github_Secrets/blob/main/github-metrics.svg)
