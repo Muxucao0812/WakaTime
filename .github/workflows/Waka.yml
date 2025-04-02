@@ -1,0 +1,28 @@
+name: Waka Readme
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate GitHub Metrics
+        uses: lowlighter/metrics@latest
+        with:
+          filename: metrics.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+          user: your-github-username
+          config_timezone: Asia/Shanghai
+          base: header, activity, community, repositories, metadata
+
+          plugin_languages: yes
+          plugin_isocalendar: yes
+          plugin_habits: yes
+          plugin_habits_charts: yes
+
+          # 🚀 WakaTime 统计
+          plugin_wakatime: yes
+          plugin_wakatime_token: ${{ secrets.WAKATIME_API_KEY }}
