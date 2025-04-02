@@ -2,7 +2,7 @@ name: Waka Readme
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 * * * *" # 每小时更新一次
   workflow_dispatch:
 
 jobs:
@@ -12,9 +12,8 @@ jobs:
       - name: Generate GitHub Metrics
         uses: lowlighter/metrics@latest
         with:
-          filename: metrics.svg
           token: ${{ secrets.GH_TOKEN }}
-          user: Muxucao0812
+          user: Muxucao0812 
           config_timezone: Asia/Shanghai
           base: header, activity, community, repositories, metadata
 
