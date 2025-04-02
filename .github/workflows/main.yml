@@ -24,11 +24,13 @@ jobs:
           # 基础模块
           base: header, activity, community, repositories, metadata
           
-          # 美化配置
+          # 美化配置 - 调整为大尺寸
           template: classic
-          config_display: columns
+          config_display: large  # 改为large而不是columns以获得更大的宽度
           config_order: base.header, isocalendar, languages, habits, wakatime
-          config_padding: 10%
+          config_padding: 5%     # 减少内边距以利用更多空间
+          config_width: 1000     # 明确设置宽度
+          config_height: 1000    # 明确设置高度
           
           # 编程语言统计（增强显示百分比）
           plugin_languages: yes
@@ -39,7 +41,7 @@ jobs:
           
           # 贡献日历
           plugin_isocalendar: yes
-          plugin_isocalendar_duration: full-year
+          plugin_isocalendar_duration: half-year  # 改为半年显示以减少垂直空间占用
           
           # 编码习惯（显示每天编码时间分布）
           plugin_habits: yes
@@ -55,6 +57,7 @@ jobs:
           plugin_wakatime_sections: time, languages, editors, os
           plugin_wakatime_limit: 5
           plugin_wakatime_url: https://wakatime.com
+          
           
           # 输出文件设置
           output_action: commit
