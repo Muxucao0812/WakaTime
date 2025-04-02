@@ -1,9 +1,10 @@
 name: GitHub个人资料统计生成
 
 on:
-  push:
-    branches:
-      - main
+  # 移除 push 触发器或修改为更具体条件
+  # push:
+  #   branches:
+  #     - main
   schedule:
     # 设置为每天中午12点(UTC)运行，即北京时间晚上8点
     - cron: "0 12 * * *"
@@ -58,7 +59,7 @@ jobs:
           plugin_wakatime_sections: time, languages, editors, os, projects
           plugin_wakatime_limit: 8
           plugin_wakatime_url: https://wakatime.com
-          plugin_wakatime_repositories: yes
+
           
           # 代码行统计（显示添加和删除了多少行代码）
           plugin_lines: yes
@@ -83,4 +84,5 @@ jobs:
           # 输出文件设置
           output_action: commit
           committer_branch: main
-          committer_message: "📊 更新个人GitHub统计信息"
+          # 添加 [Skip GitHub Action] 标记到提交消息中
+          committer_message: "📊 更新个人GitHub统计信息 [Skip GitHub Action]"
