@@ -1,22 +1,26 @@
 name: GitHub个人资料统计生成
 
 on:
-  # 移除 push 触发器或修改为更具体条件
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - github-metrics.svg
   schedule:
-    # 设置为每天中午12点(UTC)运行，即北京时间晚上8点
-    - cron: "0 12 * * *"
-  # 允许手动触发工作流
+    # 每天 12:17 UTC 运行，对应北京时间 20:17
+    - cron: "17 12 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: github-metrics
+  cancel-in-progress: true
 
 jobs:
   github-metrics:
-    name: 生成GitHub统计数据
+    name: 生成 GitHub / WakaTime 统计图
     runs-on: ubuntu-latest
     steps:
-      - name: 生成GitHub个人资料统计信息
+      - name: 生成更聚焦的 WakaTime 统计信息
         uses: lowlighter/metrics@latest
         with:
           # 认证与设置
@@ -24,64 +28,41 @@ jobs:
           committer_token: ${{ secrets.GH_TOKEN }}
           user: Muxucao0812
           config_timezone: Asia/Shanghai
-          
-          # 基础模块 - 移除可能暴露仓库信息的模块
-          base: header, metadata
-          
-          # 美化配置
+
+          # 只保留统计卡片本体，让画面聚焦在编码数据
+          base: ""
+
+          # 版式配置
           template: classic
           config_display: large
-          config_order: base.header, languages, habits, wakatime
+          config_order: wakatime, habits, isocalendar
           config_padding: 5%
-     
-          
-          # 编程语言统计（保留）
-          plugin_languages: yes
-          plugin_languages_details: percentage
-          plugin_languages_colors: github
-          plugin_languages_threshold: 0%
-          plugin_languages_limit: 10
-          
+
           # 日历统计（显示半年）
           plugin_isocalendar: yes
           plugin_isocalendar_duration: half-year
-          
-          # 编码习惯（显示每天编码时间分布）
+
+          # 编码习惯（启用更顺滑的图表样式）
           plugin_habits: yes
           plugin_habits_charts: yes
+          plugin_habits_charts_type: graph
           plugin_habits_facts: yes
           plugin_habits_from: 200
-          plugin_habits_days: 14
-          
-          # WakaTime统计（只保留语言、时间、编辑器和操作系统）
+          plugin_habits_days: 21
+          plugin_habits_trim: yes
+          plugin_habits_languages_limit: 6
+          plugin_habits_languages_threshold: 2%
+
+          # WakaTime 统计（增加项目/语言图表，减少重复信息）
           plugin_wakatime: yes
           plugin_wakatime_token: ${{ secrets.WAKATIME_API_KEY }}
-          plugin_wakatime_days: 7
-          plugin_wakatime_sections: time, languages, editors, os
-          plugin_wakatime_limit: 8
+          plugin_wakatime_days: 30
+          plugin_wakatime_sections: time, projects, projects-graphs, languages, languages-graphs, editors, os
+          plugin_wakatime_limit: 6
+          plugin_wakatime_languages_other: yes
           plugin_wakatime_url: https://wakatime.com
-          
-          # 移除代码行统计（会显示仓库信息）
-          # plugin_lines: yes
-          # plugin_lines_sections: repositories, history
-          # plugin_lines_repositories_limit: 5
-          # plugin_lines_history_limit: 5
-          
-          # 移除活动时间线（会暴露具体项目）
-          # plugin_activity: yes
-          # plugin_activity_limit: 5
-          # plugin_activity_days: 14
-          # plugin_activity_filter: all
-          # plugin_activity_visibility: public
-          # plugin_activity_timestamps: yes
-          
-          # 移除值得注意的贡献（会暴露具体项目）
-          # plugin_notable: yes
-          # plugin_notable_from: organization
-          # plugin_notable_types: commit
-          # plugin_notable_repositories: yes
-          
+
           # 输出文件设置
           output_action: commit
           committer_branch: main
-          committer_message: "📊 更新个人GitHub统计信息 [Skip GitHub Action]"
+          committer_message: "📊 更新个人 GitHub 统计信息 [skip ci]"
